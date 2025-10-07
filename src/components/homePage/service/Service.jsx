@@ -14,22 +14,21 @@ const Service = () => {
 
   useEffect(() => {
     const cards = cardRefs.current;
-    const lastCard = cards[cards.length - 1]; // Third card is the reference for unpin
+    const lastCard = cards[cards.length - 1]; 
 
     cards.forEach((card) => {
       if (!card) return;
 
       gsap.to(card, {
-        scale: 0.95, // Slight shrink
+        scale: 0.95, 
         scrollTrigger: {
           trigger: card,
-          start: "top 20%", // When top of card hits 20% from top of viewport
+          start: "top 20%", 
           endTrigger: lastCard,
-          end: "center center", // Keep pinned until last card reaches center
+          end: "center center", 
           pin: true,
           pinSpacing: false,
           scrub: true,
-          markers: true, // Optional for debugging
         },
       });
     });
