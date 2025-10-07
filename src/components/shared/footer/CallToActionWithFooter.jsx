@@ -18,22 +18,34 @@ const CallToActionWithFooter = () => {
     }, []);
 
     useEffect(() => {
-        if (!ctaRef.current || !footerHeight) return;
+        if (!ctaRef.current || !footerHeight || !footerRef.current) return;
 
-        // Animate CTA moving up to reveal footer
+        // CTA animation: moves up to reveal footer
         gsap.to(ctaRef.current, {
             y: -footerHeight,
             ease: "none",
             scrollTrigger: {
                 trigger: sectionRef.current,
-                start: "top bottom",
-                end: `+=${footerHeight}`, // scroll distance = footer height
+                start: "top bottom", 
+                end: `bottom bottom`, 
                 scrub: true,
             },
         });
 
+        // Footer fixed **only when CTA starts moving**
+        ScrollTrigger.create({
+            trigger: ctaRef.current, 
+            start: "top 70%",    
+            endTrigger: sectionRef.current,
+            end: "bottom bottom",
+            onEnter: () => footerRef.current.style.position = "fixed",
+            onEnterBack: () => footerRef.current.style.position = "fixed",
+            onLeave: () => footerRef.current.style.position = "absolute",
+            onLeaveBack: () => footerRef.current.style.position = "absolute",
+        });
+
         return () => {
-            ScrollTrigger.getAll().forEach((t) => t.kill());
+            ScrollTrigger.getAll().forEach(t => t.kill());
         };
     }, [footerHeight]);
 
@@ -41,29 +53,27 @@ const CallToActionWithFooter = () => {
         <section
             ref={sectionRef}
             className="relative w-full bg-white"
-            style={{ minHeight: `${footerHeight + 400}px` }} // 400px scroll room + footer height
+            style={{ minHeight: `${footerHeight + 400}px` }}
         >
-            {/* CTA with white background */}
+            {/* CTA */}
             <div
                 ref={ctaRef}
-                className="absolute bottom-0 w-full flex flex-col justify-center items-center px-6 z-20 bg-white"
-                style={{ height: footerHeight }}
+                className="absolute top-0 w-full flex flex-col justify-center items-center px-6 z-20 bg-white"
+                style={{ minHeight: `${footerHeight + 400}px` }}
             >
                 <h2 className="text-3xl md:text-5xl font-semibold max-w-4xl mx-auto text-center leading-snug">
                     Cost-effective, reliable and used by hundreds of pharmacies today
                 </h2>
-                <button className="mt-8 bg-black text-white font-semibold py-3 px-6 rounded-full transition-all hover:bg-gray-800">
+                <button className="mt-8 bg-[#f7b518] text-black font-semibold py-3 px-6 rounded-full transition-all hover:bg-[#fdd204]">
                     Get started
                 </button>
             </div>
 
-
-            {/* Footer fixed globally */}
+            {/* Footer */}
             <footer
                 ref={footerRef}
-                className="fixed bottom-0 left-0 w-full bg-[#f7b518] text-black px-6 md:px-10 xl:px-48 pt-8 pb-16 overflow-hidden "
+                className="absolute bottom-0 left-0 w-full bg-[#f7b518] text-black px-6 md:px-10 xl:px-48 pt-8 pb-16 overflow-hidden"
             >
-                {/* Top small footer content */}
                 <div className="flex flex-col md:flex-row justify-between items-center text-sm gap-3">
                     <div className="flex flex-col md:flex-row items-center gap-3">
                         <p>© 2025 Hivyr. All rights reserved.</p>
@@ -82,14 +92,12 @@ const CallToActionWithFooter = () => {
                     </div>
                 </div>
 
-                {/* Big bottom text */}
                 <div className="mt-12 text-center">
                     <h1 className="text-[18vw] md:text-[10vw] font-extrabold leading-none">
                         Hivyr
                     </h1>
                 </div>
             </footer>
-
         </section>
     );
 };

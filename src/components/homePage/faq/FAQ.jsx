@@ -71,7 +71,7 @@ const FaqItem = ({ item, isOpen, onClick }) => {
     }, [isOpen]);
 
     return (
-        <div className="w-full bg-gray-50 rounded-2xl mb-4 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+        <div className="w-full bg-gray-50 rounded-2xl  overflow-hidden shadow-sm hover:shadow-md transition-shadow ">
             <button
                 className="flex justify-between items-center w-full p-6 text-left focus:outline-none"
                 onClick={onClick}
@@ -106,7 +106,7 @@ export default function FAQ() {
     };
 
     return (
-        <section className="min-h-screen py-20 bg-white font-sans">
+        <section className="min-h-screen py-20 bg-white z-20 mt-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-16">
                 {/* Left Side */}
                 <div className="md:sticky md:top-20 h-fit">

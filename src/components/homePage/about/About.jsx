@@ -38,22 +38,7 @@ export default function About() {
         <div
           ref={imageRef}
           className="relative max-w-4xl p-2 rounded-[2rem] "
-          style={{
-            // CSS Variable to hold the gradient
-            '--glow-gradient': 'linear-gradient(to bottom right, #fdd204, #f7b518)',
-            // Custom CSS to create the blurred pseudo-element glow
-            '--glow-effect': `
-                content: '';
-                position: absolute;
-                inset: 0;
-                border-radius: inherit;
-                background: var(--glow-gradient);
-                filter: blur(18px);
-                opacity: 1;
-                z-index: -1;
-            `,
-
-          }}
+          
         >
 
           <div
