@@ -65,7 +65,7 @@ const Offerings = () => {
     return (
         <section
             ref={sectionRef}
-            className="relative bg-white py-24 lg:py-40 overflow-hidden"
+            className="relative bg-white py-24 lg:py-40 overflow-hidden z-10"
         >
             {/* Masked Area */}
             <div className="relative max-w-7xl mx-auto overflow-hidden px-6">

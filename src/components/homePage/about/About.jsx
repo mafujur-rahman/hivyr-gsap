@@ -12,17 +12,17 @@ export default function About() {
     gsap.fromTo(
       imageRef.current,
       {
-        rotateX: 15, 
+        rotateX: 15,
         transformPerspective: 1000,
         transformOrigin: "center center",
       },
       {
-        rotateX: 0, 
+        rotateX: 0,
         scrollTrigger: {
           trigger: imageRef.current,
-          start: "bottom bottom", 
-          end: "top bottom",      
-          scrub: 1.5,             
+          start: "bottom bottom",
+          end: "top bottom",
+          scrub: 1.5,
         },
         ease: "power2.out",
       }
@@ -30,19 +30,50 @@ export default function About() {
   }, []);
 
   return (
-    <section className="relative w-full flex flex-col items-center justify-center py-20 overflow-hidden">
+    <section className="relative w-full flex flex-col items-center justify-center py-20 overflow-hidden bg-white z-10">
 
       {/* Image Container */}
       <div className="w-full flex justify-center mb-12 perspective-1000">
+
         <div
           ref={imageRef}
-          className="w-full max-w-4xl"
+          className="relative max-w-4xl p-2 rounded-[2rem] "
+          style={{
+            // CSS Variable to hold the gradient
+            '--glow-gradient': 'linear-gradient(to bottom right, #fdd204, #f7b518)',
+            // Custom CSS to create the blurred pseudo-element glow
+            '--glow-effect': `
+                content: '';
+                position: absolute;
+                inset: 0;
+                border-radius: inherit;
+                background: var(--glow-gradient);
+                filter: blur(18px);
+                opacity: 1;
+                z-index: -1;
+            `,
+
+          }}
         >
-          <img
-            src="/images/about.avif"
-            alt="AI Agent Illustration"
-            className="w-full h-auto object-cover rounded-3xl shadow-xl"
-          />
+
+          <div
+            className="absolute inset-0 rounded-[2rem]"
+            style={{
+              background: 'linear-gradient(to bottom right, #fdd204, #f7b518)',
+              filter: 'blur(20px)',
+              opacity: '1',     
+              zIndex: '-1',
+            }}
+          ></div>
+
+          {/* The actual image container, slightly smaller to reveal the glow */}
+          <div className="rounded-[1.8rem] overflow-hidden relative z-10">
+            <img
+              src="/images/about.avif"
+              alt="AI Agent Illustration"
+              className="w-full h-auto object-cover shadow-xl"
+            />
+          </div>
         </div>
       </div>
 

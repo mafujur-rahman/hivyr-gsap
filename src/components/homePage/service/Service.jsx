@@ -35,7 +35,7 @@ const Service = () => {
   }, []);
 
   return (
-    <section className="bg-white py-16">
+    <section className="bg-white py-16 z-30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <p className="text-[#f7b518] text-sm font-semibold text-center uppercase mb-2">SERVICES</p>
         <h2 className="text-4xl xl:text-6xl font-bold text-gray-900 text-center mb-20">

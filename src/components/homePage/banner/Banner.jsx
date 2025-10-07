@@ -22,7 +22,7 @@ export default function Banner() {
     }, []);
 
     return (
-        <section className="relative w-full h-screen flex items-center justify-center overflow-hidden  px-4 sm:px-8 lg:px-16 py-8 sm:py-12">
+        <section className="relative w-full h-screen flex items-center justify-center overflow-hidden  px-4 sm:px-8 lg:px-16 py-8 sm:py-12 bg-white z-10">
 
             <div className="absolute inset-0 m-2 sm:m-4 xl:m-5 rounded-2xl overflow-hidden">
                 <video
