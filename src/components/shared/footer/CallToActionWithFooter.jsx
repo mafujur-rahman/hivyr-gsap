@@ -10,6 +10,7 @@ const CallToActionWithFooter = () => {
     const ctaRef = useRef(null);
     const footerRef = useRef(null);
     const [footerHeight, setFooterHeight] = useState(0);
+    const h2Ref = useRef(null);
 
     useEffect(() => {
         if (footerRef.current) {
@@ -20,34 +21,65 @@ const CallToActionWithFooter = () => {
     useEffect(() => {
         if (!ctaRef.current || !footerHeight || !footerRef.current) return;
 
-        // CTA animation: moves up to reveal footer
+        // CTA scroll animation (moves up revealing footer)
         gsap.to(ctaRef.current, {
             y: -footerHeight,
             ease: "none",
             scrollTrigger: {
                 trigger: sectionRef.current,
-                start: "top bottom", 
-                end: `bottom bottom`, 
+                start: "top bottom",
+                end: `bottom bottom`,
                 scrub: true,
             },
         });
 
-        // Footer fixed **only when CTA starts moving**
+        // Footer fixed only when CTA starts moving
         ScrollTrigger.create({
-            trigger: ctaRef.current, 
-            start: "top 70%",    
+            trigger: ctaRef.current,
+            start: "top 70%",
             endTrigger: sectionRef.current,
             end: "bottom bottom",
-            onEnter: () => footerRef.current.style.position = "fixed",
-            onEnterBack: () => footerRef.current.style.position = "fixed",
-            onLeave: () => footerRef.current.style.position = "absolute",
-            onLeaveBack: () => footerRef.current.style.position = "absolute",
+            onEnter: () => (footerRef.current.style.position = "fixed"),
+            onEnterBack: () => (footerRef.current.style.position = "fixed"),
+            onLeave: () => (footerRef.current.style.position = "absolute"),
+            onLeaveBack: () => (footerRef.current.style.position = "absolute"),
         });
 
         return () => {
-            ScrollTrigger.getAll().forEach(t => t.kill());
+            ScrollTrigger.getAll().forEach((t) => t.kill());
         };
     }, [footerHeight]);
+
+    // 🌈 Circular gradient follow effect
+    useEffect(() => {
+        const h2 = h2Ref.current;
+        if (!h2) return;
+
+        const handleMouseMove = (e) => {
+            const rect = h2.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            h2.style.background = `radial-gradient(circle at ${x}px ${y}px, #fdd204, #f7b518 60%)`;
+            h2.style.webkitBackgroundClip = "text";
+            h2.style.backgroundClip = "text";
+            h2.style.color = "transparent";
+        };
+
+        const resetGradient = () => {
+            h2.style.background = "linear-gradient(135deg, #f7b518, #fdd204)";
+            h2.style.webkitBackgroundClip = "text";
+            h2.style.backgroundClip = "text";
+            h2.style.color = "transparent";
+        };
+
+        h2.addEventListener("mousemove", handleMouseMove);
+        h2.addEventListener("mouseleave", resetGradient);
+
+        return () => {
+            h2.removeEventListener("mousemove", handleMouseMove);
+            h2.removeEventListener("mouseleave", resetGradient);
+        };
+    }, []);
 
     return (
         <section
@@ -61,7 +93,16 @@ const CallToActionWithFooter = () => {
                 className="absolute top-0 w-full flex flex-col justify-center items-center px-6 z-20 bg-white"
                 style={{ minHeight: `${footerHeight + 400}px` }}
             >
-                <h2 className="text-3xl md:text-5xl font-semibold max-w-4xl mx-auto text-center leading-snug">
+                <h2
+                    ref={h2Ref}
+                    className="text-3xl md:text-5xl font-semibold max-w-4xl mx-auto text-center leading-snug select-none transition-all duration-300"
+                    style={{
+                        background: "linear-gradient(135deg, #f7b518, #fdd204)",
+                        WebkitBackgroundClip: "text",
+                        backgroundClip: "text",
+                        color: "transparent",
+                    }}
+                >
                     Cost-effective, reliable and used by hundreds of pharmacies today
                 </h2>
                 <button className="mt-8 bg-[#f7b518] text-black font-semibold py-3 px-6 rounded-full transition-all hover:bg-[#fdd204]">
