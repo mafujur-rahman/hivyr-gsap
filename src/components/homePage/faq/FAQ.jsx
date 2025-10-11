@@ -3,42 +3,32 @@ import React, { useState, useRef, useEffect } from "react";
 import { Plus, Minus } from "lucide-react";
 import { gsap } from "gsap";
 
-// FAQ Data
+// Updated FAQ Data
 const faqData = [
     {
-        question: "Is Script Runner a pharmacy or drug manufacturer?",
+        question: "What is Hivyr AI Agents?",
         answer:
-            "Script Runner is a logistics and delivery platform, not a pharmacy or drug manufacturer. We partner with licensed pharmacies to provide safe, compliant, and timely medication delivery services to consumers.",
+            "Hivyr AI Agents is a platform that automates repetitive tasks, optimizes workflows, and provides intelligent insights to help businesses work smarter and faster.",
     },
     {
-        question: "How long does it take to onboard?",
+        question: "How does Hivyr improve productivity?",
         answer:
-            "Onboarding typically takes 3-5 business days, depending on the complexity of your integration needs and regulatory requirements. We offer dedicated support to ensure a smooth transition.",
+            "By automating mundane tasks and providing real-time analytics, Hivyr allows teams to focus on strategy, innovation, and decision-making instead of manual operations.",
     },
     {
-        question: "How about security, data, and privacy?",
+        question: "Is my data secure?",
         answer:
-            "We adhere to strict data protection standards, including HIPAA and GDPR compliance. All data is encrypted, and we never share customer-specific delivery information with unauthorized third parties.",
+            "Absolutely. We follow strict data privacy standards, encrypt all information, and never share sensitive data with unauthorized parties.",
     },
     {
-        question: "Can I use my own drivers?",
+        question: "Can I integrate Hivyr with existing systems?",
         answer:
-            "Yes, our platform is flexible. While we offer a network of vetted drivers, you can integrate your own driver fleet for deliveries, managing them seamlessly through our dispatch system.",
+            "Yes! Hivyr is designed to integrate seamlessly with most existing platforms via APIs, ensuring smooth adoption without disrupting your current workflows.",
     },
     {
-        question: "What kind of drones do we deploy?",
+        question: "What kind of support is available?",
         answer:
-            "We deploy custom-built, medical-grade delivery drones optimized for weight, distance, and weather conditions. They are routinely inspected and certified for aerial logistics.",
-    },
-    {
-        question: "What is your pricing?",
-        answer:
-            "Our pricing is determined by volume and distance. We offer tiered subscription models and pay-as-you-go options. Please contact our sales team for a custom quote.",
-    },
-    {
-        question: "Do you enable payment collection?",
-        answer:
-            "Yes, our delivery process includes secure, integrated payment collection options, supporting credit cards, mobile wallets, and other popular payment methods at the point of delivery.",
+            "Our team provides dedicated onboarding, training, and 24/7 support to ensure you get the most out of Hivyr AI Agents.",
     },
 ];
 
@@ -71,7 +61,7 @@ const FaqItem = ({ item, isOpen, onClick }) => {
     }, [isOpen]);
 
     return (
-        <div className="w-full bg-gray-50 rounded-2xl  overflow-hidden shadow-sm hover:shadow-md transition-shadow ">
+        <div className="w-full bg-gray-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
             <button
                 className="flex justify-between items-center w-full p-6 text-left focus:outline-none"
                 onClick={onClick}
@@ -108,19 +98,16 @@ export default function FAQ() {
     return (
         <section className="min-h-screen py-20 bg-white z-20 mt-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-16">
-                {/* Left Side */}
-                <div className="md:sticky md:top-20 h-fit">
+                {/* Left Side - FAQ Text */}
+                <div className="h-fit">
                     <p className="text-[#f7b518] font-semibold uppercase text-sm mb-4">
                         FAQ
                     </p>
-                    <h1 className="text-6xl font-extrabold text-gray-900 leading-tight">
-                        Questions?
-                        <br />
-                        Answers.
+                    <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight mb-6">
+                        Frequently Asked Questions
                     </h1>
-                    <p className="mt-6 text-xl text-gray-600 max-w-md">
-                        We have a lot to offer — here’s a sneak peek at what our partners ask
-                        most often.
+                    <p className="mt-2 text-xl text-gray-600 max-w-md">
+                        Find answers to common questions about Hivyr AI Agents and how it can transform your business.
                     </p>
                 </div>
 

@@ -58,7 +58,7 @@ const WhyHivyr = () => {
                 ease: "none",
             }, 0);
 
-        // --- Revert + fadeout background
+        // --- Revert + full-screen background fadeout
         const revertTl = gsap.timeline({
             scrollTrigger: {
                 trigger: pillsEl,
@@ -68,6 +68,7 @@ const WhyHivyr = () => {
             },
         });
 
+        // Animate pills reverting + full screen background fadeout first
         revertTl
             .to(leftPill, {
                 x: 0,
@@ -83,30 +84,28 @@ const WhyHivyr = () => {
                 rotate: 10,
                 ease: "power2.out",
             }, 0)
+            // Background covers full viewport
+            .to(sectionEl, {
+                backgroundColor: "rgba(247,181,24,1)",
+                duration: 0,
+            }, 0)
             .to(sectionEl, {
                 backgroundColor: "rgba(247,181,24,0)",
                 ease: "power2.out",
-            }, 0);
-
-        // --- Sequential scroll-based fade-in text animation (NEW)
-        fadeTextEls.forEach((el) => {
-            gsap.fromTo(
-                el,
+                duration: 1.5,
+            }, 0.2) // fade out starts slightly after pills animation
+            // Text animation starts after background fadeout
+            .fromTo(fadeTextEls,
                 { y: 100, opacity: 0 },
                 {
                     y: 0,
                     opacity: 1,
-                    duration: 1,
+                    duration: 1.2,
+                    stagger: 0.3,
                     ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: el,
-                        start: "top 70%",
-                        end: "bottom 70%",
-                        toggleActions: "play none none reverse",
-                    },
-                }
+                }, ">1.5" // start after background fadeout completes
             );
-        });
+
     }, []);
 
     return (
@@ -116,11 +115,9 @@ const WhyHivyr = () => {
                 {/* Text Content */}
                 <div ref={textRef} className="text-center max-w-2xl mx-auto">
                     <p className="uppercase tracking-wide text-sm mb-3">STATS</p>
-                    <h2 className="text-4xl font-semibold mb-6">Why Hivyr?</h2>
+                    <h2 className="text-4xl xl:text-6xl font-bold mb-6">Why Hivyr?</h2>
                     <p className="text-lg leading-relaxed text-black/90">
-                        As the scope of pharmacy expands, Hivyr's mission is to free up the
-                        time of pharmacists to allow them to focus on patient care and not on
-                        delivery and logistics.
+                        At Hivyr, we harness the power of AI to streamline complex processes and automate repetitive tasks. Our solutions free up your time so you can focus on what truly matters—making smarter decisions, improving productivity, and driving innovation.
                     </p>
                 </div>
 
@@ -132,14 +129,14 @@ const WhyHivyr = () => {
                         className="absolute left-[12%] -top-36 rotate-[-20deg] flex items-center"
                     >
                         <div className="w-28 h-20 flex items-center justify-center rounded-l-full font-semibold text-2xl text-black 
-                            bg-gradient-to-br from-[#ff8452] to-[#e44512] shadow-[inset_0_4px_10px_rgba(255,255,255,0.5),0_6px_12px_rgba(0,0,0,0.25)]
-                            relative overflow-hidden">
-                            <span className="relative z-10">6-15</span>
+            bg-gradient-to-br from-[#3b82f6] to-[#1e3a8a] shadow-[inset_0_4px_10px_rgba(255,255,255,0.5),0_6px_12px_rgba(0,0,0,0.25)]
+            relative overflow-hidden">
+                            <span className="relative z-10">50+</span>
                             <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/30 to-transparent rounded-l-full opacity-60"></div>
                         </div>
                         <div className="bg-gradient-to-br from-gray-100 to-gray-300 text-black text-sm w-48 h-20 flex items-center justify-center text-center rounded-r-full shadow-[inset_0_2px_8px_rgba(255,255,255,0.4),0_4px_10px_rgba(0,0,0,0.25)] relative overflow-hidden">
                             <span className="relative z-10">
-                                Labour hours<br />saved per week
+                                Tasks automated<br />per week
                             </span>
                             <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/30 to-transparent rounded-r-full opacity-60"></div>
                         </div>
@@ -150,13 +147,13 @@ const WhyHivyr = () => {
                         ref={centerPillRef}
                         className="absolute left-[45%] top-20 rotate-[10deg] flex items-center"
                     >
-                        <div className="w-28 h-20 flex items-center justify-center rounded-l-full font-semibold text-2xl text-black bg-gradient-to-br from-[#ff6b6b] to-[#b51e1e] shadow-[inset_0_4px_10px_rgba(255,255,255,0.5),0_6px_12px_rgba(0,0,0,0.25)] relative overflow-hidden">
-                            <span className="relative z-10">1-3</span>
+                        <div className="w-28 h-20 flex items-center justify-center rounded-l-full font-semibold text-2xl text-black bg-gradient-to-br from-[#38bdf8] to-[#0ea5e9] shadow-[inset_0_4px_10px_rgba(255,255,255,0.5),0_6px_12px_rgba(0,0,0,0.25)] relative overflow-hidden">
+                            <span className="relative z-10">120+</span>
                             <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/30 to-transparent rounded-l-full opacity-60"></div>
                         </div>
                         <div className="bg-gradient-to-br from-gray-100 to-gray-300 text-black text-sm w-48 h-20 flex items-center justify-center text-center rounded-r-full shadow-[inset_0_2px_8px_rgba(255,255,255,0.4),0_4px_10px_rgba(0,0,0,0.25)] relative overflow-hidden">
                             <span className="relative z-10">
-                                Delivery customer<br />disputes resolved
+                                Decisions optimized<br />daily
                             </span>
                             <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/30 to-transparent rounded-r-full opacity-60"></div>
                         </div>
@@ -168,34 +165,36 @@ const WhyHivyr = () => {
                         className="absolute right-[12%] -top-8 rotate-[15deg] flex items-center"
                     >
                         <div className="w-28 h-20 flex items-center justify-center rounded-l-full font-semibold text-2xl text-black bg-gradient-to-br from-[#ffd36e] to-[#e39a00] shadow-[inset_0_4px_10px_rgba(255,255,255,0.5),0_6px_12px_rgba(0,0,0,0.25)] relative overflow-hidden">
-                            <span className="relative z-10">2-6</span>
+                            <span className="relative z-10">99%</span>
                             <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/30 to-transparent rounded-l-full opacity-60"></div>
                         </div>
                         <div className="bg-gradient-to-br from-gray-100 to-gray-300 text-black text-sm w-48 h-20 flex items-center justify-center text-center rounded-r-full shadow-[inset_0_2px_8px_rgba(255,255,255,0.4),0_4px_10px_rgba(0,0,0,0.25)] relative overflow-hidden">
                             <span className="relative z-10">
-                                Errors prevented<br />per week
+                                Accuracy achieved<br />in AI predictions
                             </span>
                             <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/30 to-transparent rounded-r-full opacity-60"></div>
                         </div>
                     </div>
                 </div>
+
             </section>
 
             {/* --- New Sequential Fade-in Section --- */}
             <section
                 ref={fadeTextRef}
-                className="relative bg-white text-[#f7b518] text-center  pb-20 flex flex-col justify-center overflow-hidden"
+                className="relative bg-white text-[#fdd204] text-center pb-20 flex flex-col justify-center overflow-hidden"
             >
-                <h3 className="fade-text text-3xl md:text-4xl font-semibold">
-                    More time for clinical services
+                <h3 className="fade-text text-3xl md:text-4xl xl:text-6xl font-bold">
+                    More time to focus on innovation
                 </h3>
-                <h3 className="fade-text text-3xl md:text-4xl font-semibold">
-                    More time to treat minor ailments
+                <h3 className="fade-text text-3xl md:text-4xl xl:text-6xl font-bold">
+                    More time to make smarter decisions
                 </h3>
-                <h3 className="fade-text text-3xl md:text-4xl font-semibold">
-                    More time for professional services
+                <h3 className="fade-text text-3xl md:text-4xl xl:text-6xl font-bold">
+                    More time to grow your business
                 </h3>
             </section>
+
         </>
     );
 };

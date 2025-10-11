@@ -78,15 +78,17 @@ export default function Navbar() {
     return (
         <nav className="w-full flex items-center justify-between">
             {/* Logo */}
-            <div className="px-6 py-4">
+            <div className="px-6 py-4 w-40 h-20 flex items-center">
                 <Image
                     src="/images/logo/logo.png"
-                    alt="hivyr logo"
-                    width={90}
-                    height={40}
+                    alt="Hivyr Logo"
+                    width={800}
+                    height={800}
                     className="object-contain"
+                    priority
                 />
             </div>
+
 
             {/* Black Nav Section */}
             <div className="flex-1 bg-black text-white flex items-center justify-between px-12 py-5">

@@ -50,7 +50,7 @@ const CallToActionWithFooter = () => {
         };
     }, [footerHeight]);
 
-    // 🌈 Circular gradient follow effect
+    //  Circular gradient follow effect
     useEffect(() => {
         const h2 = h2Ref.current;
         if (!h2) return;

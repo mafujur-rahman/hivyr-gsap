@@ -10,55 +10,112 @@ const Offerings = () => {
     const sectionRef = useRef(null);
     const contentRef = useRef(null);
 
-    // Cards data
     const cards = [
         {
             id: 1,
-            title: "Use your own drivers",
+            title: "Phone Agent",
             description:
-                "Empower your existing in-house drivers to become more efficient.",
-            image: "/images/offering/offering-1.avif",
+                "A smart voice-based AI that handles calls, schedules appointments, and supports customers with natural, human-like conversation flow anytime.",
+            image: "/images/ai-agents/channel-phone.png",
         },
         {
             id: 2,
-            title: "Partner with couriers",
+            title: "Chatbot Agent",
             description:
-                "Integrate seamlessly with third-party courier services.",
-            image: "/images/offering/offering-2.avif",
+                "An intelligent chatbot that instantly answers queries, guides users, and improves engagement through seamless, context-aware conversations.",
+            image: "/images/ai-agents/channel-chatbot.png",
         },
         {
             id: 3,
-            title: "Hybrid model",
+            title: "Voice Agent",
             description:
-                "Combine in-house drivers and couriers for maximum reach.",
-            image: "/images/offering/offering-3.avif",
+                "A lifelike virtual assistant that understands voice commands and responds naturally, creating smooth and interactive communication experiences.",
+            image: "/images/ai-agents/channel-voice.png",
+        },
+        {
+            id: 4,
+            title: "WhatsApp Agent",
+            description:
+                "Automate WhatsApp chats, send updates, and assist customers 24/7 with personalized, AI-driven responses that enhance satisfaction and sales.",
+            image: "/images/ai-agents/channel-whatsapp.png",
+        },
+        {
+            id: 5,
+            title: "Messenger Agent",
+            description:
+                "Engage your Facebook audience instantly using AI automation that answers FAQs, manages promotions, and boosts real-time interaction.",
+            image: "/images/ai-agents/channel-messenger.png",
+        },
+        {
+            id: 6,
+            title: "Instagram Agent",
+            description:
+                "Automate Instagram DMs, handle product queries, and respond to comments to increase engagement and convert followers into loyal customers.",
+            image: "/images/ai-agents/channel-instagram.png",
+        },
+        {
+            id: 7,
+            title: "Shopify Agent",
+            description:
+                "An AI sales assistant that helps customers, tracks orders, and recommends products, streamlining eCommerce operations and boosting revenue.",
+            image: "/images/ai-agents/channel-shopify-mobile.png",
+        },
+        {
+            id: 8,
+            title: "Gmail Agent",
+            description:
+                "A smart inbox assistant that reads, categorizes, and replies to emails automatically, helping you manage communication effortlessly.",
+            image: "/images/ai-agents/gmail-agent.png",
+        },
+        {
+            id: 9,
+            title: "Presentation Agent",
+            description:
+                "Create stunning presentations from text or ideas in seconds. The AI formats slides with design and content precision automatically.",
+            image: "/images/ai-agents/channel-presentation.png",
+        },
+        {
+            id: 10,
+            title: "SMS Agent",
+            description:
+                "Send automated reminders, alerts, and promotional texts instantly to maintain timely customer communication and increase engagement.",
+            image: "/images/ai-agents/channel-sms.png",
         },
     ];
+
 
     useEffect(() => {
         const section = sectionRef.current;
         const content = contentRef.current;
+        const cardsContainer = content?.querySelector(".cards-container");
 
-        gsap.set(content, { xPercent: 0 });
+        if (!section || !content || !cardsContainer) return;
 
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: section,
-                start: "top top",
-                end: "+=2000",
-                scrub: 1.5,
-                pin: true,
-                anticipatePin: 1,
-            },
-        });
+        // Calculate dimensions
+        const totalWidth = cardsContainer.scrollWidth;
+        const visibleWidth = section.offsetWidth;
 
-        // Smooth, steady left scroll
-        tl.to(content, {
-            xPercent: -55,
-            ease: "none",
-        });
+        const scrollDistance = totalWidth - visibleWidth + 2000;
 
-        return () => ScrollTrigger.getAll().forEach((t) => t.kill());
+        const ctx = gsap.context(() => {
+            gsap.set(content, { x: 0 });
+
+            gsap.to(content, {
+                x: -scrollDistance,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top top",
+                    end: () => `+=${scrollDistance * 1.0}`,
+                    scrub: 1.3,
+                    pin: true,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true,
+                },
+            });
+        }, section);
+
+        return () => ctx.revert();
     }, []);
 
 
@@ -67,20 +124,15 @@ const Offerings = () => {
             ref={sectionRef}
             className="relative bg-white py-24 lg:py-40 overflow-hidden z-10"
         >
-            {/* Masked Area */}
             <div className="relative max-w-7xl mx-auto overflow-hidden px-6">
-                {/* Scrollable Content */}
-                <div
-                    ref={contentRef}
-                    className="flex items-center gap-20 w-[200%]"
-                >
-                    {/* Left Side */}
-                    <div className="flex flex-col lg:flex-row items-center justify-between w-1/2 gap-12 flex-shrink-0">
+                <div ref={contentRef} className="flex items-start gap-20">
+                    {/* Intro Section */}
+                    <div className="flex flex-col lg:flex-row items-center justify-center w-full flex-shrink-0 gap-12 text-center lg:text-left min-h-[600px]">
                         {/* Video */}
-                        <div className="lg:w-1/2 flex justify-center shrink-0">
-                            <div className="rounded-2xl overflow-hidden shadow-2xl w-full max-w-xl">
+                        <div className="lg:w-1/2 flex justify-center items-center">
+                            <div className="rounded-2xl overflow-hidden w-full max-w-xl">
                                 <video
-                                    src="/video/offering/offering.mp4"
+                                    src="/video/ai-agents/ai-agents.mp4"
                                     autoPlay
                                     loop
                                     muted
@@ -91,44 +143,45 @@ const Offerings = () => {
                         </div>
 
                         {/* Text */}
-                        <div className="lg:w-1/2 text-center lg:text-left">
+                        <div className="lg:w-1/2 flex flex-col justify-center items-center lg:items-start">
                             <p className="text-[#f7b518] font-semibold uppercase tracking-widest text-sm mb-3">
-                                OFFERINGS
+                                AI Agents
                             </p>
                             <h2 className="text-4xl lg:text-5xl font-bold leading-tight text-gray-900 mb-6">
-                                Unparalleled flexibility that will fit any pharmacy&apos;s needs
+                                Meet the Intelligent Agents Powering Your Business
                             </h2>
                             <p className="text-lg lg:text-2xl font-medium text-gray-600 leading-relaxed">
-                                We give you the flexibility to deploy various last-mile
-                                offerings.
+                                Discover how each specialized AI agent helps automate communication, streamline workflows, and enhance customer experiences across every platform. From voice and chat to email and social media, these agents empower your business to operate smarter and faster than ever before.
                             </p>
                         </div>
                     </div>
 
-                    {/* Right Side: Mapped Cards */}
-                    <div className="flex flex-row items-center justify-center gap-8 w-1/2">
+                    {/* Cards Section */}
+                    <div className="cards-container flex flex-row items-center gap-10 flex-nowrap">
                         {cards.map((card) => (
                             <div
                                 key={card.id}
-                                className="bg-gray-100 rounded-3xl p-8 w-[400px] flex-shrink-0"
+                                className="bg-gray-100 rounded-3xl p-10 w-[520px] flex-shrink-0 flex flex-col justify-between h-[600px]"
                             >
-                                <p className="text-lg font-semibold bg-white text-black w-12 h-12 flex items-center justify-center rounded-full mb-6">
+                                <p className="text-lg font-semibold bg-[#fdd204] text-black w-12 h-12 flex items-center justify-center rounded-full mb-6 ">
                                     {card.id}
                                 </p>
-                                <div className="relative w-full h-[320px] mb-6">
+                                <div className="relative w-full h-[400px] mb-8">
                                     <Image
                                         src={card.image}
                                         alt={card.title}
                                         fill
-                                        className="object-contain rounded-2xl"
+                                        className="object-contain rounded-2xl scale-105"
                                     />
                                 </div>
-                                <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                                    {card.title}
-                                </h3>
-                                <p className="text-gray-600 text-lg font-medium">
-                                    {card.description}
-                                </p>
+                                <div>
+                                    <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                                        {card.title}
+                                    </h3>
+                                    <p className="text-gray-600 text-lg font-medium leading-relaxed">
+                                        {card.description}
+                                    </p>
+                                </div>
                             </div>
                         ))}
                     </div>
