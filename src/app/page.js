@@ -1,10 +1,12 @@
 import About from "@/components/homePage/about/About";
 import Banner from "@/components/homePage/banner/Banner";
+import CTA from "@/components/homePage/cta/CTA";
 import FAQ from "@/components/homePage/faq/FAQ";
 import Offerings from "@/components/homePage/offerings/Offerings";
+import Pricing from "@/components/homePage/pricing/Pricing";
 import Service from "@/components/homePage/service/Service";
 import WhyHivyr from "@/components/homePage/whyHivyr/WhyHivyr";
-import CallToActionWithFooter from "@/components/shared/footer/CallToActionWithFooter";
+import Footer from "@/components/shared/footer/Footer";
 
 
 export default function Home() {
@@ -16,7 +18,9 @@ export default function Home() {
       <Offerings />
       <WhyHivyr />
       <FAQ />
-      <CallToActionWithFooter />
+      <Pricing />
+      <CTA />
+      <Footer />
     </div>
   );
 }

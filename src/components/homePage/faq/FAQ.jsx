@@ -96,7 +96,7 @@ export default function FAQ() {
     };
 
     return (
-        <section className="min-h-screen py-20 bg-white z-20 mt-20">
+        <section className=" py-20 bg-white z-20 mt-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-16">
                 {/* Left Side - FAQ Text */}
                 <div className="h-fit">
