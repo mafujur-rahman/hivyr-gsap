@@ -59,7 +59,7 @@ const Service = () => {
       title: "Real-Time Speech to Text",
       description:
         "Add live captions to calls and streams, generate transcripts, and integrate with large language models (LLMs).",
-      image: "/images/service/speech.jpg",
+      image: "/images/service/speech.png",
       alt: "A glowing blue orb surrounded by iridescent rings",
       icon: <FaClosedCaptioning />,
     },
@@ -184,7 +184,7 @@ const Service = () => {
                 </div>
               ) : (
                 // Default layout for other cards
-                <div className="relative w-[80%] h-[100%]">
+                <div className="relative w-[100%] h-[100%]">
                   <Image
                     src={service.image}
                     alt={service.alt}
