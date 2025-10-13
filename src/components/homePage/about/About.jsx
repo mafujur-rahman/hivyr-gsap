@@ -54,7 +54,7 @@ export default function About() {
           {/* The actual image container, slightly smaller to reveal the glow */}
           <div className="rounded-[1.8rem] overflow-hidden relative z-10">
             <img
-              src="/images/about.avif"
+              src="/images/about-hivyr.jpg"
               alt="AI Agent Illustration"
               className="w-full h-auto object-cover shadow-xl"
             />
