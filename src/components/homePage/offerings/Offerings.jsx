@@ -16,70 +16,70 @@ const Offerings = () => {
             title: "Phone Agent",
             description:
                 "A smart voice-based AI that handles calls, schedules appointments, and supports customers with natural, human-like conversation flow anytime.",
-            image: "/images/ai-agents/channel-phone.png",
+            image: "/images/ai-agents/offering-1.avif",
         },
         {
             id: 2,
             title: "Chatbot Agent",
             description:
                 "An intelligent chatbot that instantly answers queries, guides users, and improves engagement through seamless, context-aware conversations.",
-            image: "/images/ai-agents/channel-chatbot.png",
+            image: "/images/ai-agents/offering-2.avif",
         },
         {
             id: 3,
             title: "Voice Agent",
             description:
                 "A lifelike virtual assistant that understands voice commands and responds naturally, creating smooth and interactive communication experiences.",
-            image: "/images/ai-agents/channel-voice.png",
+            image: "/images/ai-agents/offering-3.avif",
         },
         {
             id: 4,
             title: "WhatsApp Agent",
             description:
                 "Automate WhatsApp chats, send updates, and assist customers 24/7 with personalized, AI-driven responses that enhance satisfaction and sales.",
-            image: "/images/ai-agents/channel-whatsapp.png",
+            image: "/images/ai-agents/offering-1.avif",
         },
         {
             id: 5,
             title: "Messenger Agent",
             description:
                 "Engage your Facebook audience instantly using AI automation that answers FAQs, manages promotions, and boosts real-time interaction.",
-            image: "/images/ai-agents/channel-messenger.png",
+            image: "/images/ai-agents/offering-2.avif",
         },
         {
             id: 6,
             title: "Instagram Agent",
             description:
                 "Automate Instagram DMs, handle product queries, and respond to comments to increase engagement and convert followers into loyal customers.",
-            image: "/images/ai-agents/channel-instagram.png",
+            image: "/images/ai-agents/offering-3.avif",
         },
         {
             id: 7,
             title: "Shopify Agent",
             description:
                 "An AI sales assistant that helps customers, tracks orders, and recommends products, streamlining eCommerce operations and boosting revenue.",
-            image: "/images/ai-agents/channel-shopify-mobile.png",
+            image: "/images/ai-agents/offering-1.avif",
         },
         {
             id: 8,
             title: "Gmail Agent",
             description:
                 "A smart inbox assistant that reads, categorizes, and replies to emails automatically, helping you manage communication effortlessly.",
-            image: "/images/ai-agents/gmail-agent.png",
+            image: "/images/ai-agents/offering-2.avif",
         },
         {
             id: 9,
             title: "Presentation Agent",
             description:
                 "Create stunning presentations from text or ideas in seconds. The AI formats slides with design and content precision automatically.",
-            image: "/images/ai-agents/channel-presentation.png",
+            image: "/images/ai-agents/offering-3.avif",
         },
         {
             id: 10,
             title: "SMS Agent",
             description:
                 "Send automated reminders, alerts, and promotional texts instantly to maintain timely customer communication and increase engagement.",
-            image: "/images/ai-agents/channel-sms.png",
+            image: "/images/ai-agents/offering-1.avif",
         },
     ];
 
@@ -161,11 +161,13 @@ const Offerings = () => {
                         {cards.map((card) => (
                             <div
                                 key={card.id}
-                                className="bg-gray-100 rounded-3xl p-10 w-[520px] flex-shrink-0 flex flex-col justify-between h-[600px]"
+                                className="bg-gray-100 rounded-3xl p-10 w-[400px] flex-shrink-0 flex flex-col justify-between h-[600px]"
                             >
-                                <p className="text-lg font-semibold bg-[#fdd204] text-black w-12 h-12 flex items-center justify-center rounded-full mb-6 ">
-                                    {card.id}
-                                </p>
+                                <div className="flex items-center justify-start mb-6">
+                                    <span className="bg-[#fdd204] text-black w-10 h-10 flex items-center justify-center rounded-full font-semibold text-lg">
+                                        {card.id}
+                                    </span>
+                                </div>
                                 <div className="relative w-full h-[400px] mb-8">
                                     <Image
                                         src={card.image}
@@ -183,6 +185,7 @@ const Offerings = () => {
                                     </p>
                                 </div>
                             </div>
+
                         ))}
                     </div>
                 </div>
