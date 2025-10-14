@@ -46,7 +46,7 @@ const Pricing = () => {
                                 </li>
                             </ul>
                         </div>
-                        <button className="bg-black text-white font-semibold py-3 rounded-xl hover:bg-gray-900 transition">
+                        <button className="bg-black text-white font-semibold py-3 rounded-xl hover:bg-[#fdd204] hover:text-black transition">
                             Get Started
                         </button>
                     </div>
@@ -83,7 +83,7 @@ const Pricing = () => {
                                 </li>
                             </ul>
                         </div>
-                        <button className="bg-black text-white font-semibold py-3 rounded-xl hover:bg-gray-900 transition">
+                        <button className="bg-black text-white font-semibold py-3 rounded-xl hover:bg-[#fdd204] hover:text-black transition">
                             Get Started
                         </button>
                     </div>
@@ -120,7 +120,7 @@ const Pricing = () => {
                                 </li>
                             </ul>
                         </div>
-                        <button className="bg-black text-white font-semibold py-3 rounded-xl hover:bg-gray-900 transition">
+                        <button className="bg-black text-white font-semibold py-3 rounded-xl hover:bg-[#fdd204] hover:text-black transition">
                             Get Started
                         </button>
                     </div>
@@ -146,7 +146,7 @@ const Pricing = () => {
                     </div>
                     <div className="flex items-center gap-6 mt-6 md:mt-0">
                         <p className="text-3xl font-bold">$2,000</p>
-                        <button className="bg-white text-black font-semibold py-3 px-6 rounded-xl hover:bg-gray-100 transition">
+                        <button className="bg-[#fdd204] text-black font-semibold py-3 px-6 rounded-xl hover:bg-gray-100 transition">
                             Get Started
                         </button>
                     </div>

@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import BottomText from "./BottomText";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,7 +12,6 @@ const WhyHivyr = () => {
     const leftPillRef = useRef(null);
     const centerPillRef = useRef(null);
     const rightPillRef = useRef(null);
-    const fadeTextRef = useRef(null);
 
     useEffect(() => {
         const textEl = textRef.current;
@@ -20,7 +20,6 @@ const WhyHivyr = () => {
         const centerPill = centerPillRef.current;
         const rightPill = rightPillRef.current;
         const sectionEl = pillsEl.closest("section");
-        const fadeTextEls = fadeTextRef.current.querySelectorAll(".fade-text");
 
         // --- Pin the intro text
         ScrollTrigger.create({
@@ -43,20 +42,32 @@ const WhyHivyr = () => {
                 anticipatePin: 1,
             },
         })
-            .to(leftPill, {
-                x: window.innerWidth * 0.324,
-                rotate: 0,
-                ease: "none",
-            }, 0)
-            .to(rightPill, {
-                x: -window.innerWidth * 0.270,
-                rotate: 0,
-                ease: "none",
-            }, 0)
-            .to(centerPill, {
-                rotate: 0,
-                ease: "none",
-            }, 0);
+            .to(
+                leftPill,
+                {
+                    x: window.innerWidth * 0.324,
+                    rotate: 0,
+                    ease: "none",
+                },
+                0
+            )
+            .to(
+                rightPill,
+                {
+                    x: -window.innerWidth * 0.27,
+                    rotate: 0,
+                    ease: "none",
+                },
+                0
+            )
+            .to(
+                centerPill,
+                {
+                    rotate: 0,
+                    ease: "none",
+                },
+                0
+            );
 
         // --- Revert + full-screen background fadeout
         const revertTl = gsap.timeline({
@@ -68,44 +79,50 @@ const WhyHivyr = () => {
             },
         });
 
-        // Animate pills reverting + full screen background fadeout first
         revertTl
-            .to(leftPill, {
-                x: 0,
-                rotate: -20,
-                ease: "power2.out",
-            }, 0)
-            .to(rightPill, {
-                x: 0,
-                rotate: 15,
-                ease: "power2.out",
-            }, 0)
-            .to(centerPill, {
-                rotate: 10,
-                ease: "power2.out",
-            }, 0)
-            // Background covers full viewport
-            .to(sectionEl, {
-                backgroundColor: "rgba(247,181,24,1)",
-                duration: 0,
-            }, 0)
-            .to(sectionEl, {
-                backgroundColor: "rgba(247,181,24,0)",
-                ease: "power2.out",
-                duration: 1.5,
-            }, 0.2) // fade out starts slightly after pills animation
-            // Text animation starts after background fadeout
-            .fromTo(fadeTextEls,
-                { y: 100, opacity: 0 },
+            .to(
+                leftPill,
                 {
-                    y: 0,
-                    opacity: 1,
-                    duration: 1.2,
-                    stagger: 0.3,
-                    ease: "power3.out",
-                }, ">1.5" // start after background fadeout completes
+                    x: 0,
+                    rotate: -20,
+                    ease: "power2.out",
+                },
+                0
+            )
+            .to(
+                rightPill,
+                {
+                    x: 0,
+                    rotate: 15,
+                    ease: "power2.out",
+                },
+                0
+            )
+            .to(
+                centerPill,
+                {
+                    rotate: 10,
+                    ease: "power2.out",
+                },
+                0
+            )
+            .to(
+                sectionEl,
+                {
+                    backgroundColor: "rgba(247,181,24,1)",
+                    duration: 0,
+                },
+                0
+            )
+            .to(
+                sectionEl,
+                {
+                    backgroundColor: "rgba(247,181,24,0)",
+                    ease: "power2.out",
+                    duration: 1.5,
+                },
+                0.2
             );
-
     }, []);
 
     return (
@@ -117,7 +134,10 @@ const WhyHivyr = () => {
                     <p className="uppercase tracking-wide text-sm mb-3">STATS</p>
                     <h2 className="text-4xl xl:text-6xl font-bold mb-6">Why Hivyr?</h2>
                     <p className="text-lg leading-relaxed text-black/90">
-                        At Hivyr, we harness the power of AI to streamline complex processes and automate repetitive tasks. Our solutions free up your time so you can focus on what truly matters—making smarter decisions, improving productivity, and driving innovation.
+                        At Hivyr, we harness the power of AI to streamline complex
+                        processes and automate repetitive tasks. Our solutions free up your
+                        time so you can focus on what truly matters—making smarter
+                        decisions, improving productivity, and driving innovation.
                     </p>
                 </div>
 
@@ -176,25 +196,10 @@ const WhyHivyr = () => {
                         </div>
                     </div>
                 </div>
-
             </section>
 
-            {/* --- New Sequential Fade-in Section --- */}
-            <section
-                ref={fadeTextRef}
-                className="relative bg-white text-[#fdd204] text-center pb-20 flex flex-col justify-center overflow-hidden"
-            >
-                <h3 className="fade-text text-3xl md:text-4xl xl:text-6xl font-bold">
-                    More time to focus on innovation
-                </h3>
-                <h3 className="fade-text text-3xl md:text-4xl xl:text-6xl font-bold">
-                    More time to make smarter decisions
-                </h3>
-                <h3 className="fade-text text-3xl md:text-4xl xl:text-6xl font-bold">
-                    More time to grow your business
-                </h3>
-            </section>
-
+            {/* --- Bottom Text Section --- */}
+            <BottomText />
         </>
     );
 };

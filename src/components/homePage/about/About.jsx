@@ -64,10 +64,10 @@ export default function About() {
 
       {/* Text Content */}
       <div className="text-center px-6 sm:px-12 max-w-5xl">
-        <h2 className="text-3xl xl:text-4xl font-bold text-gray-900 mb-6">
+        <h2 className="text-3xl xl:text-5xl font-bold text-gray-900 mb-6">
           Next-generation prescription logistics software designed to streamline your workflow and boost efficiency.
         </h2>
-        <p className="text-gray-600 text-base sm:text-2xl font-medium mb-8 max-w-2xl mx-auto">
+        <p className="text-gray-600 text-base sm:text-2xl font-medium mb-8 max-w-3xl mx-auto">
           Intelligently designed to streamline workflows and boost efficiency.
         </p>
         <button className="bg-[#fdd204] text-black px-6 py-3 rounded-full hover:bg-[#f7b518] transition-all duration-300">
