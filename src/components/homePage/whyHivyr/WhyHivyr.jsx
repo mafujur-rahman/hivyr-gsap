@@ -14,6 +14,11 @@ const WhyHivyr = () => {
     const rightPillRef = useRef(null);
 
     useEffect(() => {
+        const screenWidth = window.innerWidth;
+
+        // Disable scroll animations for mobile/tablet
+        if (screenWidth < 1024) return;
+
         const textEl = textRef.current;
         const pillsEl = pillsRef.current;
         const leftPill = leftPillRef.current;
@@ -21,7 +26,7 @@ const WhyHivyr = () => {
         const rightPill = rightPillRef.current;
         const sectionEl = pillsEl.closest("section");
 
-        // --- Pin the intro text
+        // Pin heading section
         ScrollTrigger.create({
             trigger: textEl,
             start: "top 10%",
@@ -31,7 +36,22 @@ const WhyHivyr = () => {
             pinSpacing: false,
         });
 
-        // --- Pills main animation
+        const viewportCenter = window.innerWidth / 2;
+
+        // get each pill's current center
+        const leftRect = leftPill.getBoundingClientRect();
+        const rightRect = rightPill.getBoundingClientRect();
+
+        const leftCurrentCenter = leftRect.left + leftRect.width / 2;
+        const rightCurrentCenter = rightRect.left + rightRect.width / 2;
+
+        // calculate how much each pill needs to move to reach viewport center
+        const leftMove = viewportCenter - leftCurrentCenter;  // positive: move right
+        const rightMove = viewportCenter - rightCurrentCenter; // negative: move left
+
+
+
+        // Pills animation
         const pillsTl = gsap.timeline({
             scrollTrigger: {
                 trigger: centerPill,
@@ -41,35 +61,15 @@ const WhyHivyr = () => {
                 pin: pillsEl,
                 anticipatePin: 1,
             },
-        })
-            .to(
-                leftPill,
-                {
-                    x: window.innerWidth * 0.324,
-                    rotate: 0,
-                    ease: "none",
-                },
-                0
-            )
-            .to(
-                rightPill,
-                {
-                    x: -window.innerWidth * 0.27,
-                    rotate: 0,
-                    ease: "none",
-                },
-                0
-            )
-            .to(
-                centerPill,
-                {
-                    rotate: 0,
-                    ease: "none",
-                },
-                0
-            );
+        });
 
-        // --- Revert + full-screen background fadeout
+        pillsTl
+            .to(leftPill, { x: leftMove, rotate: 0, ease: "none" }, 0)
+            .to(rightPill, { x: rightMove, rotate: 0, ease: "none" }, 0)
+            .to(centerPill, { rotate: 0, ease: "none" }, 0);
+
+
+        // Fade out background after animation
         const revertTl = gsap.timeline({
             scrollTrigger: {
                 trigger: pillsEl,
@@ -80,40 +80,10 @@ const WhyHivyr = () => {
         });
 
         revertTl
-            .to(
-                leftPill,
-                {
-                    x: 0,
-                    rotate: -20,
-                    ease: "power2.out",
-                },
-                0
-            )
-            .to(
-                rightPill,
-                {
-                    x: 0,
-                    rotate: 15,
-                    ease: "power2.out",
-                },
-                0
-            )
-            .to(
-                centerPill,
-                {
-                    rotate: 10,
-                    ease: "power2.out",
-                },
-                0
-            )
-            .to(
-                sectionEl,
-                {
-                    backgroundColor: "rgba(247,181,24,1)",
-                    duration: 0,
-                },
-                0
-            )
+            .to(leftPill, { x: 0, rotate: -20, ease: "power2.out" }, 0)
+            .to(rightPill, { x: 0, rotate: 15, ease: "power2.out" }, 0)
+            .to(centerPill, { rotate: 10, ease: "power2.out" }, 0)
+            .to(sectionEl, { backgroundColor: "rgba(247,181,24,1)", duration: 0 }, 0)
             .to(
                 sectionEl,
                 {
@@ -127,30 +97,30 @@ const WhyHivyr = () => {
 
     return (
         <>
-            {/* --- Pills Section --- */}
             <section className="relative bg-[#f7b518] text-black py-32 overflow-hidden z-10">
-                {/* Text Content */}
+                {/* Text Section */}
                 <div ref={textRef} className="text-center max-w-2xl mx-auto">
                     <p className="uppercase tracking-wide text-sm mb-3">STATS</p>
                     <h2 className="text-4xl xl:text-6xl font-bold mb-6">Why Hivyr?</h2>
                     <p className="text-lg leading-relaxed text-black/90">
-                        At Hivyr, we harness the power of AI to streamline complex
-                        processes and automate repetitive tasks. Our solutions free up your
-                        time so you can focus on what truly matters—making smarter
-                        decisions, improving productivity, and driving innovation.
+                        At Hivyr, we harness the power of AI to streamline complex processes
+                        and automate repetitive tasks. Our solutions free up your time so
+                        you can focus on what truly matters—making smarter decisions,
+                        improving productivity, and driving innovation.
                     </p>
                 </div>
 
-                {/* Pills Container */}
-                <div ref={pillsRef} className="relative w-full flex justify-center py-40 mt-[500px]">
+                {/* Pills Section */}
+                <div
+                    ref={pillsRef}
+                    className="relative w-full pt-20 md:pt-28 py-0 lg:py-40  lg:mt-[400px] flex flex-col md:flex-col lg:block items-center gap-8"
+                >
                     {/* Left Pill */}
                     <div
                         ref={leftPillRef}
-                        className="absolute left-[12%] -top-36 rotate-[-20deg] flex items-center"
+                        className="flex items-center justify-center rotate-0 md:rotate-0 lg:rotate-[-20deg] lg:absolute lg:left-[12%] lg:-top-36"
                     >
-                        <div className="w-28 h-20 flex items-center justify-center rounded-l-full font-semibold text-2xl text-black 
-            bg-gradient-to-br from-[#3b82f6] to-[#1e3a8a] shadow-[inset_0_4px_10px_rgba(255,255,255,0.5),0_6px_12px_rgba(0,0,0,0.25)]
-            relative overflow-hidden">
+                        <div className="w-28 h-20 flex items-center justify-center rounded-l-full font-semibold text-2xl text-black bg-gradient-to-br from-[#3b82f6] to-[#1e3a8a] shadow-[inset_0_4px_10px_rgba(255,255,255,0.5),0_6px_12px_rgba(0,0,0,0.25)] relative overflow-hidden">
                             <span className="relative z-10">50+</span>
                             <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/30 to-transparent rounded-l-full opacity-60"></div>
                         </div>
@@ -165,7 +135,7 @@ const WhyHivyr = () => {
                     {/* Center Pill */}
                     <div
                         ref={centerPillRef}
-                        className="absolute left-[45%] top-20 rotate-[10deg] flex items-center"
+                        className="flex items-center justify-center rotate-0 md:rotate-0 lg:rotate-[10deg] lg:-mt-20"
                     >
                         <div className="w-28 h-20 flex items-center justify-center rounded-l-full font-semibold text-2xl text-black bg-gradient-to-br from-[#38bdf8] to-[#0ea5e9] shadow-[inset_0_4px_10px_rgba(255,255,255,0.5),0_6px_12px_rgba(0,0,0,0.25)] relative overflow-hidden">
                             <span className="relative z-10">120+</span>
@@ -182,7 +152,7 @@ const WhyHivyr = () => {
                     {/* Right Pill */}
                     <div
                         ref={rightPillRef}
-                        className="absolute right-[12%] -top-8 rotate-[15deg] flex items-center"
+                        className="flex items-center justify-center rotate-0 md:rotate-0 lg:rotate-[15deg] lg:absolute lg:right-[12%] lg:-top-8"
                     >
                         <div className="w-28 h-20 flex items-center justify-center rounded-l-full font-semibold text-2xl text-black bg-gradient-to-br from-[#ffd36e] to-[#e39a00] shadow-[inset_0_4px_10px_rgba(255,255,255,0.5),0_6px_12px_rgba(0,0,0,0.25)] relative overflow-hidden">
                             <span className="relative z-10">99%</span>
@@ -198,7 +168,6 @@ const WhyHivyr = () => {
                 </div>
             </section>
 
-            {/* --- Bottom Text Section --- */}
             <BottomText />
         </>
     );

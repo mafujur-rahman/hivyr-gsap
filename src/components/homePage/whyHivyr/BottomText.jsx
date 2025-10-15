@@ -16,7 +16,7 @@ const BottomText = () => {
         // --- Scroll fade-in animation ---
         gsap.fromTo(
             fadeText,
-            { y: 100, opacity: 0 },
+            { y: 0, opacity: 0 },
             {
                 y: 0,
                 opacity: 1,
