@@ -1,87 +1,101 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { gsap } from "gsap";
 
 export default function Navbar() {
-    const linksRef = useRef([]);
-    const loginRef = useRef(null);
-    const contactRef = useRef(null);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const menuRef = useRef(null);
+    const iconRef = useRef([]);
+    const linkRefs = useRef([]);
+    const underlineRefs = useRef([]);
+    const tl = useRef(null);
+    const iconTl = useRef(null);
 
     useEffect(() => {
-        linksRef.current.forEach((link) => {
-            const underline = link.querySelector(".underline");
-            gsap.set(underline, { scaleX: 0, transformOrigin: "left" });
-
-            link.addEventListener("mouseenter", () => {
-                gsap.to(underline, {
-                    scaleX: 1,
+        // Menu slide animation
+        tl.current = gsap.timeline({ paused: true });
+        tl.current
+            .fromTo(
+                menuRef.current,
+                { y: "-100%", opacity: 0 },
+                { y: "0%", opacity: 1, duration: 0.6, ease: "power3.out" }
+            )
+            .fromTo(
+                ".menu-item",
+                { y: 30, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    stagger: 0.05,
                     duration: 0.4,
                     ease: "power2.out",
-                });
-            });
+                },
+                "-=0.3"
+            );
 
-            link.addEventListener("mouseleave", () => {
-                gsap.to(underline, {
-                    scaleX: 0,
-                    duration: 0.4,
-                    ease: "power2.in",
-                });
-            });
-        });
-
-        // Log In underline (shorter)
-        const loginUnderline = loginRef.current.querySelector(".underline");
-        gsap.set(loginUnderline, { scaleX: 0, transformOrigin: "left" });
-        loginRef.current.addEventListener("mouseenter", () => {
-            gsap.to(loginUnderline, { scaleX: 1, duration: 0.3, ease: "power2.out" });
-        });
-        loginRef.current.addEventListener("mouseleave", () => {
-            gsap.to(loginUnderline, { scaleX: 0, duration: 0.3, ease: "power2.in" });
-        });
-
-        // Contact hover effect
-        const contact = contactRef.current;
-        const contactUnderline = contact.querySelector(".underline");
-        gsap.set(contactUnderline, { scaleX: 0, transformOrigin: "left" });
-
-        contact.addEventListener("mouseenter", () => {
-            gsap.to(contact, {
-                backgroundColor: "#000",
-                color: "#fff",
+        // Icon animation (hamburger ↔ X)
+        iconTl.current = gsap.timeline({ paused: true });
+        iconTl.current
+            .to(iconRef.current[0], {
+                y: 6,
+                rotate: 45,
                 duration: 0.3,
-                ease: "power2.out",
-            });
-            gsap.to(contactUnderline, {
-                scaleX: 1,
-                duration: 0.4,
-                ease: "power2.out",
-            });
-        });
+                ease: "power2.inOut",
+            })
+            .to(
+                iconRef.current[1],
+                { opacity: 0, duration: 0.2, ease: "power1.out" },
+                "-=0.2"
+            )
+            .to(
+                iconRef.current[2],
+                {
+                    y: -6,
+                    rotate: -45,
+                    duration: 0.3,
+                    ease: "power2.inOut",
+                },
+                "-=0.3"
+            );
+    }, []);
 
-        contact.addEventListener("mouseleave", () => {
-            gsap.to(contact, {
-                backgroundColor: "#ffffff",
-                color: "#1f2937",
-                duration: 0.3,
-                ease: "power2.in",
-            });
-            gsap.to(contactUnderline, {
-                scaleX: 0,
-                duration: 0.4,
-                ease: "power2.in",
-            });
+    useEffect(() => {
+        if (menuOpen) {
+            tl.current.play();
+            iconTl.current.play();
+        } else {
+            tl.current.reverse();
+            iconTl.current.reverse();
+        }
+    }, [menuOpen]);
+
+    // Hover underline GSAP animation
+    useEffect(() => {
+        linkRefs.current.forEach((el, index) => {
+            const underline = underlineRefs.current[index];
+            if (!el || !underline) return;
+
+            const hoverTl = gsap.timeline({ paused: true });
+            hoverTl.fromTo(
+                underline,
+                { scaleX: 0, transformOrigin: "left" },
+                { scaleX: 1, duration: 0.4, ease: "power3.out" }
+            );
+
+            el.addEventListener("mouseenter", () => hoverTl.play());
+            el.addEventListener("mouseleave", () => hoverTl.reverse());
         });
     }, []);
 
     return (
-        <nav className="w-full flex items-center justify-between">
+        <nav className="w-full flex items-center justify-between px-6 py-4 relative z-50 bg-transparent">
             {/* Logo */}
-            <div className="px-6 py-4 w-40 h-20 flex items-center">
+            <div className="flex items-center w-32 z-50">
                 <Image
                     src="/images/logo/logo.png"
-                    alt="Hivyr Logo"
+                    alt="Logo"
                     width={800}
                     height={800}
                     className="object-contain"
@@ -89,46 +103,94 @@ export default function Navbar() {
                 />
             </div>
 
-
-            {/* Black Nav Section */}
-            <div className="flex-1 bg-black text-white flex items-center justify-between px-12 py-5">
-                <ul className="flex items-center space-x-12 text-sm tracking-wide">
-                    {["Products", "Agents", "Survices +", "About", "Pricing"].map(
+            {/* Desktop Links */}
+            <div className="hidden lg:flex flex-1 bg-black text-white items-center justify-between lg:px-6 xl:px-12 py-5 lg:ml-2 xl:ml-5 2xl:ml-8">
+                <ul className="flex items-center space-x-12 lg:text-sm xl:text-lg tracking-wide">
+                    {["Products", "Agents", "Services +", "About", "Pricing"].map(
                         (text, index) => (
-                            <li key={index}>
+                            <li key={index} className="relative">
                                 <Link
                                     href="#"
-                                    ref={(el) => (linksRef.current[index] = el)}
-                                    className="relative inline-block"
+                                    ref={(el) => (linkRefs.current[index] = el)}
+                                    className="relative inline-block pb-1"
                                 >
                                     {text}
-                                    <span className="underline absolute left-0 -bottom-1 h-[1px] w-full bg-white"></span>
+                                    <span
+                                        ref={(el) => (underlineRefs.current[index] = el)}
+                                        className="absolute left-0 bottom-0 h-[1px] w-full bg-white scale-x-0"
+                                    ></span>
                                 </Link>
                             </li>
                         )
                     )}
                 </ul>
 
-                {/* Log In */}
                 <Link
                     href="#"
-                    ref={loginRef}
-                    className="relative inline-block text-sm"
+                    ref={(el) => (linkRefs.current[5] = el)}
+                    className="relative inline-block pb-1 lg:text-sm xl:text-lg"
                 >
                     Log In
-                    <span className="underline absolute left-0 -bottom-1 h-[1px] w-full bg-white"></span>
+                    <span
+                        ref={(el) => (underlineRefs.current[5] = el)}
+                        className="absolute left-0 bottom-0 h-[1px] w-full bg-white scale-x-0"
+                    ></span>
                 </Link>
             </div>
 
-            {/* Contact */}
-            <div
-                ref={contactRef}
-                className="bg-white text-gray-800 px-8 py-4.5 relative cursor-pointer overflow-hidden"
-            >
-                <Link href="#" className="relative inline-block text-sm font-medium">
+            {/* Contact button for desktop */}
+            <div className="hidden lg:block bg-white text-gray-800 px-8 lg:py-5 xl:py-6 cursor-pointer hover:bg-black  hover:text-white transition-all duration-300">
+                <Link href="#"
+                className="relative inline-block text-sm font-medium">
                     Contact
-                    <span className="underline absolute left-0 -bottom-1 h-[1px] w-full bg-white"></span>
                 </Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="lg:hidden flex flex-col justify-center items-center space-y-1.5 z-50 w-8 h-8"
+            >
+                {[0, 1, 2].map((i) => (
+                    <span
+                        key={i}
+                        ref={(el) => (iconRef.current[i] = el)}
+                        className="block h-[2px] w-6 bg-white rounded-full"
+                    ></span>
+                ))}
+            </button>
+
+            {/* Mobile Menu Overlay */}
+            <div
+                ref={menuRef}
+                className="fixed inset-0 bg-black text-white flex flex-col justify-between p-8 lg:hidden opacity-0 pointer-events-none"
+                style={{ pointerEvents: menuOpen ? "auto" : "none" }}
+            >
+                <div>
+                    <ul className="space-y-6 text-xl md:text-2xl font-light mt-40">
+                        {["Products", "Agents", "Services +", "About", "Pricing"].map(
+                            (text, index) => (
+                                <li key={index} className="menu-item">
+                                    <Link
+                                        href="#"
+                                        className="hover:text-gray-400 transition-colors duration-300"
+                                    >
+                                        {text}
+                                    </Link>
+                                </li>
+                            )
+                        )}
+                    </ul>
+                </div>
+
+                <div className="flex">
+                    <button className="w-1/2 bg-[#fdd204] py-4 text-black text-lg menu-item">
+                        Log In
+                    </button>
+                    <button className="w-1/2 bg-[#fff] py-4 text-black text-lg menu-item">
+                        Contact
+                    </button>
+                </div>
             </div>
         </nav>
     );

@@ -6,7 +6,7 @@ export default function Banner() {
   const headingRef = useRef(null);
   const subTextRef = useRef(null);
 
-  // 🔹 Title scramble animation
+  // Title scramble animation
   const scrambleText = (finalText, element) => {
     const chars =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()";
@@ -45,7 +45,7 @@ export default function Banner() {
     requestAnimationFrame(update);
   };
 
-  // 🔹 Smooth description animation (fade + slide from left)
+  // Smooth description animation (fade + slide from left)
   const revealDescriptionSmooth = (finalText, element) => {
     const words = finalText.split(" ");
     element.current.innerHTML = "";
@@ -72,7 +72,7 @@ export default function Banner() {
     const subText =
       "Automate tasks, enhance productivity, and deliver intelligent solutions with AI-powered agents designed for your business.";
 
-    // ✨ Start both animations together
+    // Start both animations together
     setTimeout(() => {
       scrambleText(headingText, headingRef);
       revealDescriptionSmooth(subText, subTextRef);
