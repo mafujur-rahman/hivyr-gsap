@@ -4,12 +4,12 @@ import React from "react";
 const Footer = () => {
   return (
     <footer className="w-full bg-[#f7b518] text-black px-6 md:px-10 xl:px-48 pt-8 pb-16 overflow-hidden relative">
-      <div className="flex flex-col md:flex-row justify-between items-center text-sm gap-3">
-        <div className="flex flex-col md:flex-row items-center gap-3">
+      <div className="flex flex-col lg:flex-row justify-between items-center text-sm gap-3">
+        <div className="flex flex-col lg:flex-row items-center gap-3">
           <p>© 2025 Hivyr. All rights reserved.</p>
           <p className="cursor-pointer hover:underline">Privacy Policy</p>
         </div>
-        <div className="flex flex-wrap justify-center gap-5 items-center">
+        <div className="flex flex-col lg:flex-row flex-wrap justify-start lg:justify-center gap-5 items-center mt-10 lg:mt-0">
           <a href="mailto:hivyrsales@.ai" className="hover:underline" target="_blank">
             sales@hivyr.ai ↗
           </a>

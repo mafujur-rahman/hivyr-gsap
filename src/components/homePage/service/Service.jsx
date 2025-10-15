@@ -17,6 +17,9 @@ const Service = () => {
   const cardRefs = useRef([]);
 
   useEffect(() => {
+    // ✅ Disable sticky animation for <1024px screens
+    if (window.innerWidth < 1024) return;
+
     const cards = cardRefs.current;
     const lastCard = cards[cards.length - 1];
 
@@ -95,28 +98,27 @@ const Service = () => {
           <div
             key={i}
             ref={(el) => (cardRefs.current[i] = el)}
-            className={`relative bg-gray-100 rounded-3xl p-16 flex items-start overflow-hidden shadow-lg h-[600px] mt-10 z-[${i + 10}]`}
+            className={`relative bg-gray-100 rounded-3xl p-8 md:p-12 lg:p-16 flex flex-col lg:flex-row items-start overflow-hidden shadow-lg h-auto lg:h-[600px] mt-10 z-[${i + 10}]`}
           >
             {/* Left side content */}
-            <div className="w-1/2 pr-10 pt-8">
-              <p className="text-xl text-black bg-[#fdd204] rounded-full w-fit p-5 mb-8">
+            <div className="w-full lg:w-1/2 lg:pr-10 pt-4 lg:pt-8">
+              <p className="text-xl text-black bg-[#fdd204] rounded-full w-fit p-4 mb-6">
                 {service.icon}
               </p>
-              <h3 className="text-4xl xl:text-5xl font-bold text-black mb-8">
+              <h3 className="text-3xl lg:text-5xl font-bold text-black mb-6">
                 {service.title}
               </h3>
-              <p className="text-gray-600 text-lg lg:text-2xl max-w-md font-medium">
+              <p className="text-gray-600 text-base md:text-lg lg:text-2xl max-w-md font-medium">
                 {service.description}
               </p>
             </div>
 
-
             {/* Right side section */}
-            <div className="w-1/2 relative h-full flex items-center justify-center">
+            <div className="w-full lg:w-1/2 relative h-[300px] sm:h-[400px] lg:h-full mt-10 lg:mt-0 flex items-center justify-center">
               {i === 0 || i === 3 ? (
                 // 1st & 4th card layout
-                <div className="relative w-[75%] h-[100%] flex items-center justify-center">
-                  <div className="relative w-[75%] h-[90%]">
+                <div className="relative w-[90%] lg:w-[75%] h-full flex items-center justify-center">
+                  <div className="relative w-full h-[90%]">
                     <Image
                       src={service.image}
                       alt={service.alt}
@@ -127,29 +129,31 @@ const Service = () => {
                   </div>
 
                   {/* Mini cards for 1st & 4th */}
-                  <div className="absolute top-10 left-[-80px] bg-white shadow-xl rounded-2xl p-5 w-[200px]">
-                    <p className="text-sm text-gray-400 uppercase font-semibold mb-1">
+                  <div className="absolute top-0 left-[-40px] lg:top-10 lg:left-[-80px] bg-white shadow-xl rounded-2xl p-4 lg:p-5 w-[160px] sm:w-[180px] lg:w-[200px]">
+                    <p className="text-xs sm:text-sm text-gray-400 uppercase font-semibold mb-1">
                       AI METRICS
                     </p>
-                    <p className="text-black font-bold text-lg">
+                    <p className="text-black font-bold text-base sm:text-lg">
                       Accuracy: <span className="text-[#fdd204]">99.4%</span>
                     </p>
                   </div>
 
-                  <div className="absolute bottom-10 right-[-80px] bg-white shadow-xl rounded-2xl p-5 w-[220px]">
-                    <p className="text-sm text-gray-400 uppercase font-semibold mb-1">
+                  <div className="absolute bottom-0 right-[-40px] lg:bottom-10 lg:right-[-80px] bg-white shadow-xl rounded-2xl p-4 lg:p-5 w-[180px] sm:w-[200px] lg:w-[220px]">
+                    <p className="text-xs sm:text-sm text-gray-400 uppercase font-semibold mb-1">
                       Processing Time
                     </p>
-                    <p className="text-black font-bold text-lg">1.2s avg</p>
-                    <button className="mt-3 text-sm text-white bg-black px-4 py-2 rounded-full">
+                    <p className="text-black font-bold text-base sm:text-lg">
+                      1.2s avg
+                    </p>
+                    <button className="mt-2 sm:mt-3 text-xs sm:text-sm text-white bg-black px-3 py-1.5 sm:px-4 sm:py-2 rounded-full">
                       View Report
                     </button>
                   </div>
                 </div>
               ) : i === 1 || i === 4 ? (
-                // 2nd & 5th card layout 
-                <div className="relative w-[100%] h-[100%] flex items-center justify-center">
-                  <div className="relative w-[100%] h-[65%]">
+                // 2nd & 5th card layout
+                <div className="relative w-[90%] lg:w-[100%] h-full flex items-center justify-center">
+                  <div className="relative w-full h-[70%]">
                     <Image
                       src={service.image}
                       alt={service.alt}
@@ -160,42 +164,40 @@ const Service = () => {
                   </div>
 
                   {/* Mini cards for 2nd & 5th */}
-                  <div className="absolute top-10 left-[-80px] bg-[#fdd204] shadow-xl rounded-2xl p-5 w-[200px]">
-                    <p className="text-sm text-black uppercase font-semibold mb-1">
+                  <div className="absolute top-0 left-[-40px] lg:top-10 lg:left-[-80px] bg-[#fdd204] shadow-xl rounded-2xl p-4 lg:p-5 w-[160px] sm:w-[180px] lg:w-[200px]">
+                    <p className="text-xs sm:text-sm text-black uppercase font-semibold mb-1">
                       Active Items
                     </p>
-                    <p className="text-black font-bold text-lg">
+                    <p className="text-black font-bold text-base sm:text-lg">
                       120+ available
                     </p>
                   </div>
 
-                  <div className="absolute bottom-1 right-[-40px] bg-white shadow-xl rounded-2xl p-5 w-[220px]">
-                    <p className="text-sm text-gray-400 uppercase font-semibold mb-1">
+                  <div className="absolute bottom-0 right-[-40px] lg:bottom-1 lg:right-[-40px] bg-white shadow-xl rounded-2xl p-4 lg:p-5 w-[180px] sm:w-[200px] lg:w-[220px]">
+                    <p className="text-xs sm:text-sm text-gray-400 uppercase font-semibold mb-1">
                       Details
                     </p>
-                    <p className="text-black font-bold text-lg">
+                    <p className="text-black font-bold text-base sm:text-lg">
                       Explore latest updates
                     </p>
-                    <button className="mt-3 text-sm text-white bg-black px-4 py-2 rounded-full">
+                    <button className="mt-2 sm:mt-3 text-xs sm:text-sm text-white bg-black px-3 py-1.5 sm:px-4 sm:py-2 rounded-full">
                       View
                     </button>
                   </div>
-
                 </div>
               ) : (
-                // Default layout for other cards
-                <div className="relative w-[100%] h-[100%]">
+                // Default layout
+                <div className="relative w-[90%] h-full">
                   <Image
                     src={service.image}
                     alt={service.alt}
                     fill
-                    className="object-contain rounded-3xl"
+                    className="object-cover rounded-3xl"
                     priority
                   />
                 </div>
               )}
             </div>
-
           </div>
         ))}
       </div>
